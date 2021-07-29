@@ -11,6 +11,9 @@ import (
 // Lock() se block tat ca cac goroutine den sau cho toi khi Unlock().
 // RWLock: block tat ca G con lai du dang la Read hay Write.
 // RLock: block tat ca G write, cho phep cac G Read dc phep truy xuat (Shared lock).
+
+// Channel la kenh giao tiep nhieu hon G. Day du lieu tu G qua G kia.
+// Lock share bien o ngoai va 2 G dung 1 bien do va thay doi
 func main() {
 	var count int = 0
 	lock := new(sync.RWMutex)
