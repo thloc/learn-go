@@ -1,11 +1,30 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 type Vertex struct {
 	X int // int = 4 byte
 	Y int // int = 4 byte
 } // La 1 kieu du lieu moi. Cau truc du lieu nay se nam trong 1 o du lieu, do lon 8 byte
+
+type People struct {
+	name string
+	age  int
+}
+
+type Student struct {
+	People
+	number  int
+	subject []string
+}
+
+// Tag
+type Demo struct {
+	number int `Maximum can't over 10`
+}
 
 func main() {
 	// Pointers:
@@ -37,4 +56,19 @@ func main() {
 	n := &v
 	n.X = 1e9
 	fmt.Println(v)
+
+	fmt.Println("----------------------")
+	student := Student{}
+	student.name = "A"
+	student.age = 19
+	student.number = 8
+	student.subject = []string{"Math", "English", "Computer"}
+	fmt.Println(student)
+
+	fmt.Println("----------------------")
+	demo := Demo{}
+	demo.number = 6
+	t := reflect.TypeOf(demo)
+	field, _ := t.FieldByName("number")
+	fmt.Println(field)
 }

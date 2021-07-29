@@ -12,4 +12,8 @@ func main() {
 
 	primes := [6]int{1, 2, 3, 4, 5, 6}
 	fmt.Println(primes)
+
+	test := [...]int{7, 8, 9}
+	fmt.Println(test)
+	// test[4] = 6 // -> error
 }
