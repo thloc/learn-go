@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -17,4 +18,28 @@ func say(s string) {
 func main() {
 	go say("world") // chay dong thoi voi say("hello")
 	say("hello")
+
+	fmt.Println("---------- wait group ------------")
+	var wg = sync.WaitGroup{}
+	wg.Add(2) // cho 2 goroutine
+
+	go func() {
+		count("Sheep")
+		wg.Done()
+	}()
+
+	go func() {
+		count("Fish")
+		wg.Done()
+	}()
+	wg.Wait()
+	fmt.Println("Done")
+}
+
+// wait group
+func count(name string) {
+	for i := 1; i < 5; i++ {
+		fmt.Println(name, i)
+		time.Sleep(time.Second)
+	}
 }
