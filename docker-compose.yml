@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: services
+  #   restart: always
+  #   volumes:
+  #     - .:/app
+  #   ports: 
+  #     - 8080:8080
+  #   command: /bin/sh -c "go run main.go"
+  #   networks:
+  #     - todos_net
+
+  mysqlDB:
+    image: mysql:5.7
+    container_name: mysqlDB
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: user
+      MYSQL_ROOT_PASSWORD: mypwd
+      MYSQL_PASSWORD: mypwd
+      MYSQL_DATABASE: db_todo
+    volumes:
+      - ./mysqldb:/var/lib/mysql
+      - ./mysqldb:/etc/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - todos_net
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    depends_on:
+      - mysqlDB
+    ports:
+      - "8082:80"
+    environment:
+      MYSQL_ROOT_PASSWORD: mypwd
+      PMA_HOST: mysqlDB
+      PMA_USER: root
+      PMA_PASSWORD: mypwd
+      PMA_ARBITRARY: 1
+    networks:
+      - todos_net
+
+networks:
+  todos_net:
+    driver: bridge
+
+volumes:
+  mysqldb:

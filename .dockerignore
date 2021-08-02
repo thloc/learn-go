@@ -1,0 +1,13 @@
+# learn folder
+learn
+
+# Documentation
+docs
+*.md
+
+# Docker file
+*Dockerfile*
+*docker-compose*
+
+# Data
+mysqldb
