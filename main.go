@@ -40,6 +40,7 @@ func runService(db *gorm.DB) error {
 	restaurants := v1.Group("/tasks")
 	{
 		restaurants.GET("", entity.GetAllTasks(appCtx))
+		restaurants.POST("", entity.CreateTask(appCtx))
 	}
 
 	return r.Run()
