@@ -1,7 +1,8 @@
-package handler
+package entity
 
 import (
 	"demo-todo/src/config"
+	"demo-todo/src/helper"
 	"demo-todo/src/model"
 	"net/http"
 
@@ -18,6 +19,6 @@ func GetAllTasks(appCtx config.AppContext) gin.HandlerFunc {
 			panic(err)
 		}
 
-		c.JSON(http.StatusOK, gin.H{"data": tasks})
+		c.JSON(http.StatusOK, helper.BuildResponse(tasks))
 	}
 }

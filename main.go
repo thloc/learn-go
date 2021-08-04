@@ -2,7 +2,7 @@ package main
 
 import (
 	"demo-todo/src/config"
-	"demo-todo/src/handler"
+	"demo-todo/src/entity"
 	"log"
 	"net/http"
 
@@ -39,7 +39,7 @@ func runService(db *gorm.DB) error {
 
 	restaurants := v1.Group("/tasks")
 	{
-		restaurants.GET("", handler.GetAllTasks(appCtx))
+		restaurants.GET("", entity.GetAllTasks(appCtx))
 	}
 
 	return r.Run()
