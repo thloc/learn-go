@@ -51,3 +51,14 @@ func (task *Task) CreateTask(db *gorm.DB, data *Task) error {
 
 	return nil
 }
+
+func (task *Task) GetTaskByCondition(db *gorm.DB, conditions map[string]interface{}) (*Task, error) {
+	var data Task
+
+	if err := db.Where(conditions).
+		First(&data).Error; err != nil {
+		return nil, err
+	}
+
+	return &data, nil
+}

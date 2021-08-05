@@ -5,6 +5,7 @@ import (
 	"demo-todo/src/helper"
 	"demo-todo/src/model"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -44,5 +45,29 @@ func CreateTask(appCtx config.AppContext) gin.HandlerFunc {
 		}
 
 		c.JSON(http.StatusOK, helper.BuildResponse(tasks))
+	}
+}
+
+func GetTask(appCtx config.AppContext) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id, err := strconv.Atoi(c.Param("id"))
+
+		if err != nil {
+			c.JSON(401, map[string]interface{}{
+				"error": err.Error(),
+			})
+
+			return
+		}
+
+		task, err := task.GetTaskByCondition(appCtx.GetMainDBConnection(), map[string]interface{}{"id": id})
+
+		if err != nil {
+			c.JSON(401, map[string]interface{}{
+				"error": err.Error(),
+			})
+		}
+
+		c.JSON(http.StatusOK, helper.BuildResponse(task))
 	}
 }
